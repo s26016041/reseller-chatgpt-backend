@@ -6,9 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(router *gin.Engine) {
-	router.GET("/version", controller.Venson)
+func SetupRoutes(router *gin.Engine, c *controller.Controller) {
+	router.GET("/version", c.Version)
 
-	router.GET("/ask", controller.Ask)
-
+	router.POST("/ask", c.Ask)
 }
