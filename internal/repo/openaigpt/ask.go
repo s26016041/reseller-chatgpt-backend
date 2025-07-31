@@ -3,7 +3,6 @@ package openaigpt
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/sashabaranov/go-openai"
 )
@@ -13,7 +12,7 @@ type AskInput struct {
 	Message []openai.ChatCompletionMessage
 }
 
-func (r *Repo) Ask(ctx context.Context, input *AskInput) error {
+func (r *Repo) Ask(ctx context.Context, input *AskInput) (string, error) {
 	req := openai.ChatCompletionRequest{
 		Model:    input.Model,
 		Messages: input.Message,
@@ -21,11 +20,8 @@ func (r *Repo) Ask(ctx context.Context, input *AskInput) error {
 
 	resp, err := r.Client.CreateChatCompletion(ctx, req)
 	if err != nil {
-		log.Fatalf("OpenAI API fail: %s", err.Error())
+		return "", fmt.Errorf("CreateChatCompletion fail: %s", err.Error())
 	}
 
-	fmt.Println("ChatGPT 回覆：")
-	fmt.Println(resp.Choices[0].Message.Content)
-
-	return nil
+	return resp.Choices[0].Message.Content, nil
 }
