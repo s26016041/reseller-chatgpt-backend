@@ -18,3 +18,15 @@ func SetupEnv() {
 func GetOpenAIAPIKey() string {
 	return os.Getenv(constant.OpenAIAPIKey)
 }
+
+func GetCognitoLoginURL() string {
+	return os.Getenv(constant.CognitoLoginURL)
+}
+
+func GetCognitoClientID() string {
+	return os.Getenv(constant.CognitoClientID)
+}
+
+func GetSecretKey() string {
+	return os.Getenv(constant.SecretKey)
+}

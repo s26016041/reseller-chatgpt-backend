@@ -8,6 +8,8 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine, c *controller.Controller) {
+	router.GET("/login", c.Login)
+
 	router.GET("/version", c.Version)
 
 	router.POST("/ask",

@@ -20,13 +20,13 @@ var validate = validator.New()
 func BindAll(ctx *gin.Context, obj interface{}) error {
 	structTags := ParseBindingTags(obj)
 
-	if structTags.Json {
+	if structTags.JSON {
 		if err := ctx.ShouldBindJSON(obj); err != nil && !errors.Is(err, io.EOF) {
 			return err
 		}
 	}
 
-	if structTags.Uri {
+	if structTags.URI {
 		if err := ctx.ShouldBindUri(obj); err != nil {
 			return fmt.Errorf("bind uri error: %w", err)
 		}
@@ -45,8 +45,8 @@ func BindAll(ctx *gin.Context, obj interface{}) error {
 
 type StructTag struct {
 	Form bool
-	Json bool
-	Uri  bool
+	JSON bool
+	URI  bool
 }
 
 func ParseBindingTags(obj interface{}) StructTag {
@@ -63,10 +63,10 @@ func ParseBindingTags(obj interface{}) StructTag {
 			output.Form = true
 		}
 		if HasTag(field, "json") {
-			output.Json = true
+			output.JSON = true
 		}
 		if HasTag(field, "uri") {
-			output.Uri = true
+			output.URI = true
 		}
 	}
 	return output

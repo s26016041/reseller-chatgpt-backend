@@ -10,7 +10,7 @@ type Repo struct {
 	Client *openai.Client
 }
 
-func NewOpenAIGPT() *Repo {
+func NewRepo() *Repo {
 	return &Repo{
 		Client: openai.NewClient(env.GetOpenAIAPIKey()),
 	}
