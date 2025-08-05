@@ -13,6 +13,3 @@ const (
 const (
 	Authorization = "Authorization"
 )
-
-// jwt
-const ()
