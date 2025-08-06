@@ -132,7 +132,7 @@ func (s *Service) funcCall(askInput *openaigpt.AskInput, message *openai.ChatCom
 		askInput.Message = append(askInput.Message, openai.ChatCompletionMessage{
 			Role:       openai.ChatMessageRoleTool,
 			ToolCallID: tool.ID,
-			Content:    json + "remaining 代表剩餘天數，請將天數轉換為「X 年 Y 個月 Z 天」的格式，其中：  - 30 天視為 1 個月  - 360 天視為 1 年",
+			Content:    json,
 		})
 	}
 
@@ -147,6 +147,8 @@ func (s *Service) funcCallSwitch(funcName string, username string, password stri
 		return "", fmt.Errorf("unknown function call: %s", funcName)
 	}
 }
+
+const licensesInventoryDescription = "remaining 代表剩餘天數，請將天數轉換為「X 年 Y 個月 Z 天」的格式，其中：  - 30 天視為 1 個月  - 360 天視為 1 年"
 
 func (s *Service) getlicensesInventory(username string, password string) (string, error) {
 	authorization, err := s.resellerAPIRepo.Login(username, password)
@@ -169,5 +171,5 @@ func (s *Service) getlicensesInventory(username string, password string) (string
 		return "", fmt.Errorf("json.Marshal fail: %s", err.Error())
 	}
 
-	return string(jsonBytes), nil
+	return string(jsonBytes) + licensesInventoryDescription, nil
 }
