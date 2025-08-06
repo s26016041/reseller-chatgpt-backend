@@ -30,3 +30,7 @@ func GetCognitoClientID() string {
 func GetSecretKey() string {
 	return os.Getenv(constant.SecretKey)
 }
+
+func GetResellerURL() string {
+	return os.Getenv(constant.ResellerURL)
+}

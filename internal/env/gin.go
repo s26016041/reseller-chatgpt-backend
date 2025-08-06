@@ -14,3 +14,21 @@ func GetAuthorization(ctx *gin.Context) string {
 
 	return authorization.(string)
 }
+
+func GetJWTUsername(ctx *gin.Context) string {
+	username, exists := ctx.Get(constant.JWTUsername)
+	if !exists {
+		return ""
+	}
+
+	return username.(string)
+}
+
+func GetJWTPassword(ctx *gin.Context) string {
+	password, exists := ctx.Get(constant.JWTPassword)
+	if !exists {
+		return ""
+	}
+
+	return password.(string)
+}

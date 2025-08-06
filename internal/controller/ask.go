@@ -27,11 +27,13 @@ func (c *Controller) Ask(ctx *gin.Context) {
 		return
 	}
 
-	getOutput, err := c.Service.Ask(ctx, buildAskMessage(input.AskMessage))
+	getOutput, err := c.Service.Ask(ctx, buildAskMessage(ctx, input.AskMessage))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	fmt.Println("getOutput:", getOutput)
 
 	ctx.JSON(200, gin.H{
 		"getOutput": getOutput,
@@ -51,7 +53,7 @@ func newAskInput(ctx *gin.Context) (*askInput, error) {
 	return &output, nil
 }
 
-func buildAskMessage(input []askMessage) *service.AskInput {
+func buildAskMessage(ctx *gin.Context, input []askMessage) *service.AskInput {
 	output := service.AskInput{}
 
 	for _, msg := range input {
@@ -60,6 +62,9 @@ func buildAskMessage(input []askMessage) *service.AskInput {
 			Content: msg.Content,
 		})
 	}
+
+	output.Username = env.GetJWTUsername(ctx)
+	output.Password = env.GetJWTPassword(ctx)
 
 	return &output
 }
