@@ -10,6 +10,7 @@ import (
 
 type LicensesInventoryResponse struct {
 	Items []LicensesInventoryItem `json:"items"`
+	// Description string                  `json:"description"`
 }
 
 type LicensesInventoryItem struct {
@@ -18,6 +19,8 @@ type LicensesInventoryItem struct {
 	AdditionalInfo string `json:"additionalInfo"`
 	Remaining      int    `json:"remaining"`
 }
+
+// const LicensesInventoryDescription = "remaining 是天數剩餘  並且 30天為 1個月 360 天為 1 年  回答時記得轉換成年月日"
 
 func (r *Repo) LicensesInventory(authorization string, companyID uint) (*LicensesInventoryResponse, error) {
 	url := env.GetResellerURL() + fmt.Sprintf("/v1/licenses/inventory?companyId=%d", companyID)
@@ -43,6 +46,8 @@ func (r *Repo) LicensesInventory(authorization string, companyID uint) (*License
 	if err := json.Unmarshal(bodyBytes, &result); err != nil {
 		return nil, fmt.Errorf("failed to parse login response: %w", err)
 	}
+
+	// result.Description = LicensesInventoryDescription
 
 	return &result, nil
 }

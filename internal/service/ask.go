@@ -101,10 +101,12 @@ func getTool() ([]openai.Tool, error) {
 	return output, nil
 }
 
+const getLicenseInventoryDescription = "取得目前可用的 license 庫存數量"
+
 func getFunctionLicenseInventory() (*openai.FunctionDefinition, error) {
 	output := openai.FunctionDefinition{
 		Name:        constant.FuncLicenseInventory,
-		Description: "取得目前可用的 license 庫存數量",
+		Description: getLicenseInventoryDescription,
 		Parameters: map[string]interface{}{
 			"type":       "object",
 			"properties": map[string]interface{}{},
@@ -130,7 +132,7 @@ func (s *Service) funcCall(askInput *openaigpt.AskInput, message *openai.ChatCom
 		askInput.Message = append(askInput.Message, openai.ChatCompletionMessage{
 			Role:       openai.ChatMessageRoleTool,
 			ToolCallID: tool.ID,
-			Content:    json,
+			Content:    json + "remaining 代表剩餘天數，請將天數轉換為「X 年 Y 個月 Z 天」的格式，其中：  - 30 天視為 1 個月  - 360 天視為 1 年",
 		})
 	}
 
