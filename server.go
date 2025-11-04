@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"reseller-chatgpt-backend/internal/controller"
 	"reseller-chatgpt-backend/internal/env"
 	"reseller-chatgpt-backend/internal/ginrouter"
@@ -15,6 +16,10 @@ func main() {
 
 	ginrouter.SetupRoutes(router, controller.NewController())
 
-	router.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
+	router.Run("0.0.0.0:" + port)
 }
