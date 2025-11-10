@@ -12,7 +12,7 @@ import (
 func main() {
 	env.SetupEnv()
 
-	router := gin.Default()
+	router := ginrouter.Setting(gin.Default())
 
 	ginrouter.SetupRoutes(router, controller.NewController())
 
