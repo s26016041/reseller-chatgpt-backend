@@ -10,6 +10,7 @@ import (
 func Setting(router *gin.Engine) *gin.Engine {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
+			"http://127.0.0.1:5173",
 			"http://localhost:5173",
 		},
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
